@@ -1,6 +1,5 @@
-/**
- * Auto Generated Java Class.
- */
+import java.util.*;
+
 public class Sound {
   
   private int[] samples;
@@ -189,6 +188,18 @@ public class Sound {
     return false;
   }
   
+  public ArrayList<Integer> getPositionOfSmallestValues2()
+  {
+    int smallest = getLowestValue();
+    ArrayList<Integer> indexList = new ArrayList<Integer>();
+
+    for (int i = 0; i < samples.length; i++)
+      if(samples[i] == smallest)
+        indexList.add(i);
+
+    return indexList;
+  }
+
   public String toString()
   {
     String output = "";
