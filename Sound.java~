@@ -1,0 +1,192 @@
+/**
+ * Auto Generated Java Class.
+ */
+public class Sound {
+  
+  private int[] samples;
+  
+  public Sound(int[] soundSamples) 
+  { 
+    samples = soundSamples;
+  }
+
+  public int limitAmplitude(int limit)
+  {
+    int numChanges = 0;
+    
+    for(int i = 0; i < samples.length; i++)
+    {
+      if (samples[i] > limit)
+      {
+        samples[i] = limit;
+        numChanges++;
+      }
+      else if(samples[i] < -limit)
+      {
+        samples[i] = -limit;
+        numChanges++;
+      }
+      
+    }
+    return numChanges;
+  }
+  
+  public void trimSilenceFromBeginning()
+  {
+    int leadingZeroes = 0;
+    
+    while(samples[leadingZeroes] == 0)
+    {
+      leadingZeroes++;
+    }
+    
+    int[] temp = new int[samples.length - leadingZeroes];
+    
+    for(int i = 0; i < temp.length; i++)
+    {
+      temp[i] = samples[i + leadingZeroes];
+    }
+    
+    samples = temp;
+  }
+  
+  public void trimSilenceFromEnd()
+  {
+    int endingZeroes = 0;
+    int i = samples.length - 1;
+    while(samples[i] == 0)
+    {
+      endingZeroes++;
+    }
+    
+    int[] temp = new int[samples.length-endingZeroes];
+    
+    for(i = 0; i < temp.length; i++)
+    {
+      temp[i] = samples[i];
+    }
+    
+    samples = temp;
+  }
+  
+  public int getCountofConsecutiveDuplicates()
+  {
+    int count = 0;
+    
+    for(int i=0; i<samples.length; i++)
+      if(samples[i] == samples[i+1])
+        count++;
+    
+    return count;
+  }
+  
+  public int getHighestValue()
+  {
+    int highest = samples[0];
+    //int highest = Integer.MIN_VALUE;
+    
+    for(int num : samples)
+      if(num > highest)
+        highest = num;
+    
+    return highest;
+  }
+  
+  public int getHighestAmplitude()
+  {
+    int highest = samples[0];
+    //int highest = Integer.MIN_VALUE;
+    
+    for(int num : samples)
+      if(Math.abs(num) > Math.abs(highest))
+        highest = num;
+    
+    return highest;
+  }
+  
+  public int getLowestValue()
+  {
+    int lowest = samples[0];
+    //int highest = Integer.MAX_VALUE;
+    
+    for(int i = 0; i < samples.length; i++)
+      if(lowest < samples[i])
+        lowest = samples[i];
+    /*
+    for(int num : samples)
+      if(num < lowest)
+       lowest = num;
+    */
+    return lowest;
+  }
+  
+  public int getLowestAmplitude()
+  {
+    int lowest = samples[0];
+    //int highest = Integer.MAX_VALUE;
+    
+    for(int num : samples)
+      if(Math.abs(num) < Math.abs(lowest))
+        lowest = num;
+    
+    return Math.abs(lowest);
+  }
+  
+  public int getPositionofSmallestValue()
+  {
+    int positionOfSmallestValue = 0;
+    
+    for(int i = 0; i < samples.length; i++)
+    {
+       if(samples[i] < samples[positionOfSmallestValue])
+       {
+         positionOfSmallestValue = i;
+       }     
+    }
+    return positionOfSmallestValue;
+  }
+  
+  public int countNumberOfMatches(int value)
+  {
+    int count = 0;
+    
+    for(int num : samples)
+      if(num == value)
+       count++;
+    
+    return count;
+  }
+  
+  public int[] getPosition0fSmallestValues()
+  {
+    
+    int lowest = getLowestValue();
+    int count = countNumberOfMatches(lowest);
+    
+    
+    int[] smallestValues = new int[count];
+    
+    int posIndex = 0;
+    for(int i = 0; i < samples.length; i++)
+    {
+      if(samples[i] == lowest)
+      {
+        smallestValues[posIndex] = i;
+        posIndex++;
+      }
+    }        
+    return smallestValues;
+  }
+  
+  public String toString()
+  {
+    String output = "";
+    for(int i=0; i<samples.length; i++)
+    {
+      output+=samples[i];
+      if(i != samples.length-1)
+        output+=", ";
+    }
+    return output;
+  }
+}
